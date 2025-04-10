@@ -72,7 +72,7 @@ def extract_all_skills(text, ner, tokenizer):
             entities = ner(chunk)
             all_entities.extend(entities)
         except RuntimeError as e:
-            print(f"⚠️ Skipping chunk due to error: {e}")
+            print(f"Skipping chunk due to error: {e}")
     return all_entities
 
 def split_text_by_token_limit(text, tokenizer, max_tokens=510):
