@@ -1,5 +1,7 @@
 import docx
 from transformers import pipeline
+from difflib import get_close_matches
+
 
 SKILL_KEYWORDS = [
     "skills", "technical skills", "core competencies",
@@ -10,16 +12,28 @@ SKILL_KEYWORDS = [
 file = "data-engineer-resume.docx"
 file_path = f"data/sample_resumes/{file}"
 
+known_skills = ["python", "sql", "excel", "tableau", "data analysis", "aws", "pandas", "keras"]
 
 
 def get_text():
     lines = word_parser(file_path)
     return "\n".join(lines)
 
-def get_skills():
+def get_skills(file_path, known_skills):
+    # Step 1: Parse lines from Word document
     data = word_parser(file_path)
-    text = find_skill_section(data)
-    ner_model(text)
+
+    # Step 2: Extract the likely skill section (optional)
+    skill_section_text = enhanced_skill_section(data)
+
+    # Step 3: Use NER if you have a model
+    entities = ner_model(skill_section_text)  # Optional step, depends on your model
+
+    # Step 4: Match close skills from known list
+    matched_skills = match_close_skills(data, known_skills)
+
+    return matched_skills
+
 
 def word_parser(file_path):
     doc = docx.Document(file_path)
@@ -110,7 +124,27 @@ def reconstruct_bio_entities(entities):
 
     return list(set(skills))  # Remove duplicates
     
-    
+
+
+def match_close_skills(text_lines, known_skills):
+    matched = set()
+    for line in text_lines:
+        words = re.findall(r'\b\w[\w\-]+\b', line.lower())
+        for word in words:
+            matches = get_close_matches(word, known_skills, n=1, cutoff=0.85)
+            if matches:
+                matched.add(matches[0])
+    return list(matched)
+
+def enhanced_skill_section(lines, keywords=SKILL_KEYWORDS):
+    text = "\n".join(lines).lower()
+    for keyword in keywords:
+        if keyword in text:
+            idx = text.find(keyword)
+            return text[idx:idx+500]  # extract section around keyword
+    return "" 
+
+
 if __name__ == "__main__":
     get_skills()
 
