@@ -52,9 +52,9 @@ document.getElementById('jobSearchForm').addEventListener('submit', function (e)
           const isRemote = job.job_is_remote ?? job.isRemote ?? null;
           let remoteInfo = '';
           if (isRemote === true) {
-            remoteInfo = '<p><strong>Remote:</strong> ✅ Yes</p>';
+            remoteInfo = '<p><strong>Remote:</strong>Yes</p>';
           } else if (isRemote === false) {
-            remoteInfo = '<p><strong>Remote:</strong> ❌ No</p>';
+            remoteInfo = '<p><strong>Remote:</strong>No</p>';
           }
 
           li.innerHTML = `
@@ -97,8 +97,8 @@ document.getElementById('jobSearchForm').addEventListener('submit', function (e)
 
                 skillUl.innerHTML = `
                   <li><strong>Extracted Skills:</strong> ${data.skills.join(', ')}</li>
-                  <li><strong>✅ Matching Skills:</strong> ${matchingSkills.length ? matchingSkills.join(', ') : 'None'}</li>
-                  <li><strong>❌ Missing Skills:</strong> ${missingSkills.length ? missingSkills.join(', ') : 'None'}</li>
+                  <li><strong>Matching Skills:</strong> ${matchingSkills.length ? matchingSkills.join(', ') : 'None'}</li>
+                  <li><strong>Missing Skills:</strong> ${missingSkills.length ? missingSkills.join(', ') : 'None'}</li>
                 `;
               } else {
                 skillUl.innerHTML = '<li>No skills found</li>';

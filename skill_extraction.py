@@ -4,14 +4,14 @@ from collections import Counter
 from difflib import get_close_matches
 import spacy
 
-# Lightweight NLP pipeline (disable parsing/NER for speed)
+#Lightweight NLP pipeline (disable parsing/NER for speed)
 light_preproces_nlp = spacy.load("en_core_web_sm", disable=["ner", "parser"])
 
 def preprocess_job_text(text: str, lemmatize: bool = True) -> str:
     if not isinstance(text, str):
         return ""
 
-    print("\n🔍 Raw job text sample:", text[:200], "...\n")
+    print("\nRaw job text sample:", text[:200], "...\n")
 
     text = BeautifulSoup(text, "html.parser").get_text()
     text = text.lower()
@@ -27,16 +27,16 @@ def preprocess_job_text(text: str, lemmatize: bool = True) -> str:
     ]
 
     cleaned = " ".join(tokens)
-    print("✅ Preprocessed text sample:", cleaned[:200], "...\n")
+    print("Preprocessed text sample:", cleaned[:200], "...\n")
     return cleaned
 
 
 def extract_skills_from_text(text: str, known_skills: list) -> list:
     words = text.split()
-    print("\n🔍 Extracting skills from text...")
-    print(f"🔢 Total words: {len(words)}")
-    print(f"🧠 Checking for 'python' presence: {'python' in words}")
-    print(f"🔤 Sample words: {words[:50]}...\n")
+    print("\nExtracting skills from text...")
+    print(f"Total words: {len(words)}")
+    print(f"Checking for 'python' presence: {'python' in words}")
+    print(f"Sample words: {words[:50]}...\n")
 
     skill_matches = []
     missed_skills = []
@@ -53,10 +53,6 @@ def extract_skills_from_text(text: str, known_skills: list) -> list:
             else:
                 missed_skills.append(skill)
 
-    if "python" not in skill_matches:
-        print("🚨 DEBUG: 'python' was NOT matched directly or fuzzily.")
-        for token in skill_tokens:
-            print(f"🔍 Is '{token}' in words? -> {token in words}")
 
-    print(f"\n✅ Matched skills (top 20): {skill_matches[:20]}")
+    print(f"\nMatched skills (top 20): {skill_matches[:20]}")
     return sorted(set(skill_matches))  # deduplicate

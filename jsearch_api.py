@@ -5,7 +5,7 @@ from typing import List, Optional
 rapid_api_key = 'e340912af8mshf94b45fea6fc3d9p18b607jsn2bfefc6c0de3'
 rapid_api_host = 'jsearch.p.rapidapi.com'
 
-# === Search Jobs ===
+#=== Search Jobs ===
 def search_jobs_with_filters(
     job_name: str,
     skills: Optional[List[str]] = None,
@@ -35,7 +35,7 @@ def search_jobs_with_filters(
     if skills:
         query += " " + " ".join(skills)
 
-    print("📝 Final search query:", query)
+    print("Final search query:", query)
 
     # === Build request parameters ===
     params = {
@@ -61,11 +61,11 @@ def search_jobs_with_filters(
     if response.status_code == 200:
         return response.json().get("data", [])
     else:
-        print(f"❌ Failed: {response.status_code} - {response.text}")
+        print(f"Failed: {response.status_code} - {response.text}")
         return []
 
 
-# === Get Job IDs ===
+#=== Get Job IDs ===
 def get_job_ids_from_search(jobs: List[dict]) -> List[str]:
     return [job.get("job_id") for job in jobs if job.get("job_id")]
 
@@ -93,7 +93,7 @@ def get_job_details_by_id(job_id: str) -> Optional[dict]:
                 "job_employment_type": job.get("job_employment_type"),
                 "job_city": job.get("job_city"),
                 "job_country": job.get("job_country"),
-                "job_is_remote": job.get("job_is_remote"),  # ✅ preserve this
+                "job_is_remote": job.get("job_is_remote"), 
                 "job_apply_link": job.get("job_apply_link"),
                 "job_posted_at_datetime_utc": job.get("job_posted_at_datetime_utc"),
             }
@@ -103,7 +103,7 @@ def get_job_details_by_id(job_id: str) -> Optional[dict]:
         print(f"Failed to fetch job details: {response.status_code} - {response.text}")
         return None
 
-# === Combine Job Text (Optional for NLP) ===
+#=== Combine Job Text (Optional for NLP) ===
 def combine_job_text_fields(
     job_title: Optional[str],
     job_description: Optional[str],

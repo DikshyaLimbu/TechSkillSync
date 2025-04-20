@@ -126,7 +126,7 @@ function extractSkillsFromCV() {
     })
     .then(res => res.json())
     .then(data => handleExtractedSkills(data.skills))
-    .catch(() => { cvExtractedSkills.innerHTML = '<p>❌ Error extracting from pasted text.</p>'; });
+    .catch(() => { cvExtractedSkills.innerHTML = '<p>Error extracting from pasted text.</p>'; });
   } else if (file) {
     const formData = new FormData();
     formData.append("resume_file", file);
@@ -137,9 +137,9 @@ function extractSkillsFromCV() {
     })
     .then(res => res.json())
     .then(data => handleExtractedSkills(data.skills))
-    .catch(() => { cvExtractedSkills.innerHTML = '<p>❌ Error extracting from file.</p>'; });
+    .catch(() => { cvExtractedSkills.innerHTML = '<p>Error extracting from file.</p>'; });
   } else {
-    cvExtractedSkills.innerHTML = '<p>⚠️ Please upload or paste your resume first.</p>';
+    cvExtractedSkills.innerHTML = '<p>Please upload or paste your resume first.</p>';
   }
 }
 
@@ -240,7 +240,7 @@ function runComparison() {
     }
   })
   .catch(err => {
-    console.error("❌ Error running skill comparison:", err);
+    console.error("Error running skill comparison:", err);
     missingSkillsList.innerHTML = '<li>Comparison failed.</li>';
   });
 }

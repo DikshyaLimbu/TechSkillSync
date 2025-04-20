@@ -4,10 +4,10 @@ import pdfplumber
 from docx import Document
 import spacy
 
-# Load spaCy model once
+#Load spaCy model once
 nlp = spacy.load("en_core_web_sm")
 
-# === Main function ===
+#=== Main function ===
 def extract_skills_from_file_or_text(input_data, known_skills):
     if isinstance(input_data, str) and os.path.exists(input_data):
         lines = _parse_document(input_data)
@@ -26,7 +26,7 @@ def extract_skills_from_file_or_text(input_data, known_skills):
     return list(set(skills_found + contextual_skills))
 
 
-# === File Parsing ===
+#=== File Parsing ===
 def _parse_document(file_path):
     ext = os.path.splitext(file_path)[-1].lower()
     if ext == ".docx":
@@ -59,7 +59,7 @@ def _parse_pdf(file_path):
     return lines
 
 
-# === Skill Extraction Logic ===
+#=== Skill Extraction Logic ===
 def _extract_skills(text, skill_set):
     doc = nlp(text)
     extracted = set()

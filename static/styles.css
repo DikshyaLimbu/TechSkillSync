@@ -33,10 +33,9 @@ input, select, textarea {
     border: 1px solid #ccc;
     font-size: 1em;
     resize: vertical;
-    box-sizing: border-box;  /* ✅ Add this line */
+    box-sizing: border-box; 
 }
 
-/* 👇 Added specific spacing for mode toggle */
 #modeToggle {
     margin-bottom: 20px;
 }
@@ -143,9 +142,9 @@ select, button {
 .hint {
     font-size: 0.9em;
     color: #666;
-    margin-top: 6px;  /* ✅ adds space above the hint */
+    margin-top: 6px;  
     margin-bottom: 10px;
-    display: block;   /* ensures it breaks onto a new line */
+    display: block;   
 }
 
 

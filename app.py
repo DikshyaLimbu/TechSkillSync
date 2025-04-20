@@ -15,10 +15,10 @@ from jsearch_api import (
     combine_job_text_fields
 )
 from skill_extraction import preprocess_job_text, extract_skills_from_text
-from skill_loader import load_known_skills
+from skill_loader import load_known_skills                          
 from resume_extraction import extract_skills_from_file_or_text
 
-UPLOAD_DIR = "temp_uploads"  # safer folder name
+UPLOAD_DIR = "temp_uploads"  #safer folder name
 
 rapid_api_key = 'e340912af8mshf94b45fea6fc3d9p18b607jsn2bfefc6c0de3'
 
@@ -45,7 +45,7 @@ def skill_matcher():
 def positions():
     return render_template('positions.html')
 
-# === API Routes ===
+#=== API Routes ===
 
 @app.route('/skills')
 def get_skills():
@@ -149,22 +149,22 @@ def extract_skills():
             os.remove(save_path)
             return jsonify({ "skills": skills })
         except Exception as e:
-            print("❌ Error processing uploaded resume:", e)
+            print("Error processing uploaded resume:", e)
             return jsonify({ "error": "Failed to extract skills from file." }), 500
 
     if request.is_json:
         data = request.get_json()
 
-        # ✅ Handle pasted resume text
+        #Handle pasted resume text
         if "resume_text" in data:
             try:
                 skills = extract_skills_from_file_or_text(data["resume_text"], known_skills)
                 return jsonify({ "skills": skills })
             except Exception as e:
-                print("❌ Error processing resume text:", e)
+                print("Error processing resume text:", e)
                 return jsonify({ "error": "Failed to extract skills from text." }), 500
 
-        # ✅ Handle job ad text
+        #Handle job ad text
         elif "job_title" in data or "job_description" in data:
             job_title = data.get("job_title", "")
             job_description = data.get("job_description", "")
@@ -176,7 +176,7 @@ def extract_skills():
                 skills = extract_skills_from_text(preprocessed, known_skills)
                 return jsonify({ "skills": skills })
             except Exception as e:
-                print("❌ Error processing job ad text:", e)
+                print("Error processing job ad text:", e)
                 return jsonify({ "error": "Failed to extract skills from job ad." }), 500
 
     return jsonify({ "error": "No valid input provided." }), 400

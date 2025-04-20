@@ -7,3 +7,4 @@ sentence-transformers
 spacy
 pdfplumber
 python-docx
+tabulate

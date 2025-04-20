@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 
-# === Preprocessing helpers ===
+#=== Preprocessing helpers ===
 def preprocess(text):
     if not isinstance(text, str):
         return ""
@@ -14,7 +14,7 @@ def remove_bracketed_words(text):
         return ""
     return re.sub(r'\s*\([^)]*\)', '', text).strip()
 
-# === Main loader ===
+#=== Main loader ===
 def load_known_skills(esco_path: str, tool_map_path: str) -> list:
     """
     Load and clean skills from ESCO taxonomy and tool mapping files.
@@ -29,7 +29,7 @@ def load_known_skills(esco_path: str, tool_map_path: str) -> list:
     esco_df = pd.read_csv(esco_path)
     tool_df = pd.read_csv(tool_map_path)
 
-    # Clean and explode ESCO skill columns
+    #Clean and explode ESCO skill columns
     skill_cols = [
         "Essential Skills (Skill)", "Essential Skills (Knowledge)",
         "Optional Skills (Skill)", "Optional Skills (Knowledge)"
@@ -39,7 +39,7 @@ def load_known_skills(esco_path: str, tool_map_path: str) -> list:
         esco_df[col] = esco_df[col].apply(lambda x: x.split(", ") if isinstance(x, str) else [])
         esco_df = esco_df.explode(col)
 
-    # Rename and preprocess
+    #Rename and preprocess
     esco_df = esco_df.rename(columns={
         "Essential Skills (Skill)": "Essential Skill",
         "Essential Skills (Knowledge)": "Essential Knowledge",
@@ -47,13 +47,13 @@ def load_known_skills(esco_path: str, tool_map_path: str) -> list:
         "Optional Skills (Knowledge)": "Optional Knowledge"
     })
 
-    # Preprocess each skill list
+    #Preprocess each skill list
     for col in ["Essential Skill", "Essential Knowledge", "Optional Skill", "Optional Knowledge"]:
         esco_df[col] = esco_df[col].apply(
             lambda x: preprocess(remove_bracketed_words(x)) if isinstance(x, str) else ""
         )
 
-    # Combine all ESCO skills
+    #Combine all ESCO skills
     all_esco_skills = (
         esco_df["Essential Skill"].dropna().tolist() +
         esco_df["Essential Knowledge"].dropna().tolist() +
@@ -61,12 +61,12 @@ def load_known_skills(esco_path: str, tool_map_path: str) -> list:
         esco_df["Optional Knowledge"].dropna().tolist()
     )
 
-    # Clean tool mapping skills
+    #Clean tool mapping skills
     tool_df["Skill"] = tool_df["Skill"].apply(
         lambda x: preprocess(remove_bracketed_words(x)) if isinstance(x, str) else ""
     )
     tool_skills = tool_df["Skill"].dropna().tolist()
 
-    # Combine and deduplicate
+    #Combine and deduplicate
     all_skills = set(all_esco_skills + tool_skills)
     return sorted(skill for skill in all_skills if skill)
