@@ -1,5 +1,7 @@
 from transformers import pipeline
 
+ner = pipeline("ner", model="jjzha/jobbert_knowledge_extraction", grouped_entities=True)
+
 def find_skill_section(lines):
     max_lines = 15
     skills_text = []
@@ -20,7 +22,6 @@ def find_skill_section(lines):
 def ner_model(data): 
     lines = data.split("\n")
     text = find_skill_section(lines)   
-    ner = pipeline("ner", model="jjzha/jobbert_knowledge_extraction", grouped_entities=True)
     
     results = ner(text)
     skills = reconstruct_bio_entities(results)
