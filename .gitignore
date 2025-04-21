@@ -2,3 +2,4 @@ venv/
 .DS_Store
 backend/app/__pycache__/
 __pycache__/
+.idea

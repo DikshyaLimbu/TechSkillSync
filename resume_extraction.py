@@ -3,6 +3,7 @@ import re
 import pdfplumber
 from docx import Document
 import spacy
+from ner_model import ner_model
 
 #Load spaCy model once
 nlp = spacy.load("en_core_web_sm")
@@ -22,7 +23,9 @@ def extract_skills_from_file_or_text(input_data, known_skills):
     cleaned_text = _clean_text(raw_text)
     skills_found = _extract_skills(cleaned_text, set(known_skills))
     contextual_skills = _extract_contextual_skills(cleaned_text, set(known_skills))
-
+    ner_skills = _extract_skills_from_ner(cleaned_text)
+    if ner_skills:
+        return list(set(skills_found + contextual_skills + ner_skills))
     return list(set(skills_found + contextual_skills))
 
 
@@ -82,3 +85,11 @@ def _extract_contextual_skills(text, skill_set):
 
 def _clean_text(text):
     return re.sub(r'\s+', ' ', text).lower().strip()
+
+def _extract_skills_from_ner(text):
+    ner_extracted_skills = []
+    try:
+        ner_extracted_skills = ner_model(text)
+    except Exception as e:
+        print(e)
+    return ner_extracted_skills
