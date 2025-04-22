@@ -1,10 +1,10 @@
-#TechSkillSync – Skill Gap Analyser
+# TechSkillSync – Skill Gap Analyser
 
 TechSkillSync is a Flask-based web application that helps users identify skill gaps for specific IT jobs by matching user-entered skills or resume content with structured job and skills taxonomies (ESCO/ANZSCO) and real-world job ads.
 
 ---
 
-##Features
+## Features
 
 - Extract skills from manual entry or uploaded/pasted resumes
 - Match user skills to ESCO/ANZSCO job roles
@@ -14,7 +14,7 @@ TechSkillSync is a Flask-based web application that helps users identify skill g
 
 ---
 
-##Setup Instructions
+## Setup Instructions
 
 ### 1. Clone or download the project
 
@@ -59,7 +59,7 @@ python -m spacy download en_core_web_sm
 
 ---
 
-##How to Run
+## How to Run
 
 From the activated virtual environment, run:
 
@@ -80,7 +80,7 @@ Flask is running this file...
 
 ---
 
-##Access the Web App
+## Access the Web App
 
 Open your browser and go to:
 
@@ -90,7 +90,7 @@ http://127.0.0.1:5000
 
 ---
 
-##Troubleshooting
+## Troubleshooting
 
 - If `venv\Scripts\activate` doesn't work, ensure you are using the Command Prompt or PowerShell (not Git Bash).
 - If ports are blocked or the server doesn’t load, try a different port by editing `app.py` like:
