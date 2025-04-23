@@ -20,7 +20,7 @@ from resume_extraction import extract_skills_from_file_or_text
 
 UPLOAD_DIR = "temp_uploads"  #safer folder name
 
-rapid_api_key = 'e340912af8mshf94b45fea6fc3d9p18b607jsn2bfefc6c0de3'
+rapid_api_key = '77e7fc99a6msheff92dac84ce9cfp1acf97jsnb3fe49797b86'
 
 app = Flask(__name__)
 print("\u2705 Flask is running this file...")

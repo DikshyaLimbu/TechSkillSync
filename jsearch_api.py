@@ -2,7 +2,7 @@ import requests
 from typing import List, Optional
 
 # === API Key ===
-rapid_api_key = 'e340912af8mshf94b45fea6fc3d9p18b607jsn2bfefc6c0de3'
+rapid_api_key = '77e7fc99a6msheff92dac84ce9cfp1acf97jsnb3fe49797b86'
 rapid_api_host = 'jsearch.p.rapidapi.com'
 
 #=== Search Jobs ===
